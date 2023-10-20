@@ -1,0 +1,27 @@
+{
+  "start":{
+    "uz":"Juda yaxshi birgalikda buyurtma beramizmi? 😃"
+  },
+  "order":{
+    "uz":"Hello"
+  },
+  "test":"Bu funksiya hozircha ishlamaydi",
+  "category_not_found":{
+    "uz":"Bunaqa kategoriya mavjud emas.\nIltimos mavjud kategoriyadan tanlang."
+  },
+  "back_to_main":{
+    "uz":"Bosh menyu"
+  },
+  "no_product_in_category":{
+    "uz":"Bu kategoriyada mahsulotlar yuq"
+  },
+  "no_category":{
+    "uz":"Hozirgi vaqtda bironta ham kategoriya mavjud emas"
+  },
+  "select_product":{
+    "uz":"Mahsulotni tanlang"
+  },
+  "select_needed_category":{
+    "uz":"Kerakli kategoriyani tanlang"
+  }
+}

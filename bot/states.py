@@ -1,1 +1,1 @@
-
+CATEGORY, PRODUCT = range(2)
