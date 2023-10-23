@@ -2,7 +2,7 @@ from ast import Call
 import logging
 from telegram.ext import Updater, CommandHandler, ConversationHandler, CallbackQueryHandler, MessageHandler, Filters
 from bot import config
-from bot.handlers import settings, user, order
+from bot.handlers import settings, user, order, cart
 from bot.keyboards import user as user_keyboard
 from bot.keyboards import order as order_keyboard
 from bot import states
@@ -31,9 +31,22 @@ def main() -> None:
         states={
             states.CATEGORY: [
                 MessageHandler(Filters.text(order_keyboard.BACK_KEY), order.back_to_main),
-                MessageHandler(Filters.text & ~Filters.command & ~Filters.text(order_keyboard.BACK_KEY), order.category)],
+                MessageHandler(Filters.text(order_keyboard.CART_KET), cart.cart),
+                MessageHandler(Filters.text & ~Filters.command, order.category)],
             states.PRODUCT: [
-                MessageHandler(Filters.text(order_keyboard.BACK_KEY), order.back_to_categories)]
+                MessageHandler(Filters.text(order_keyboard.BACK_KEY), order.back_to_categories),
+                MessageHandler(Filters.text & ~Filters.command, order.product)],
+            states.PRODUCT_COUNT: [
+                MessageHandler(Filters.text(order_keyboard.BACK_KEY), cart.back_to_products),
+                MessageHandler(Filters.text & ~Filters.command, cart.add_cart)],
+            states.CART: [
+                MessageHandler(Filters.text(order_keyboard.BACK_KEY), order.back_to_main),
+                MessageHandler(Filters.text(order_keyboard.CART_KET), cart.cart),
+                MessageHandler(Filters.text & ~Filters.command, order.category),
+                CallbackQueryHandler(pattern='^minus-', callback=cart.minus_product),
+                CallbackQueryHandler(pattern='^plus-', callback=cart.plus_product),
+                CallbackQueryHandler(pattern='^delete-', callback=cart.delete_product),
+                CallbackQueryHandler(pattern='order', callback=cart.delete_product),]
         },
         fallbacks=[CommandHandler('start', user.start)],
     )

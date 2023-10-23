@@ -16,8 +16,7 @@ def register(telegram_id, first_name, last_name):
         session.add(user)
         session.commit()
 
-    except Exception as e:
-        print(e)
+    except: pass
         
 def lang(user_id):
     Session = sessionmaker(bind=engine)

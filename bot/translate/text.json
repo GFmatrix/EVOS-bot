@@ -23,5 +23,26 @@
   },
   "select_needed_category":{
     "uz":"Kerakli kategoriyani tanlang"
+  },
+  "product_not_found":{
+    "uz":"Mahsulot topilmadi"
+  },
+  "product_info":{
+    "uz":"<b>{name}</b>\n\nNarxi: {price} so'm"
+  },
+  "pls_enter_number":{
+    "uz":"Iltimos butun raqam kiriting"
+  },
+  "added_to_cart":{
+    "uz":"Ajoyib, davom etamizmi?"
+  },
+  "cart_text":{
+    "uz":"<b>Sizning savatchangizda:</b>{list}\n\nUmumiy summa: {total_price} so'm"
+  },
+  "list_text":{
+    "uz":"\n\n<b>{name}</b>\n{count} x {price} = <b>{total_price}</b> so'm"
+  },
+  "cart_is_empty":{
+    "uz":"Afsuski sizning savatchangiz bo'm-bo'sh.\nKeling davom ettiramiz.\n\nKategoriyani tanlang."
   }
 }

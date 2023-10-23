@@ -1,1 +1,2 @@
 TOKEN = "5803667643:AAFgk8WqhWljKSo0635y46sbnu-YsDFVUQk"
+DEFAULT_IMG = "https://i.ibb.co/ynNZD3h/300x200.png"
