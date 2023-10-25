@@ -27,7 +27,8 @@ def get_product_price(product_id):
 def remove_from_cart(_id):
     Session = sessionmaker(bind=engine)
     session = Session()
-    product = session.query(CartTable).filter_by(id=_id).delete()
+    session.query(CartTable).filter_by(id=_id).delete()
+    session.commit()
 
 def get_cart_via_tg_id(telegram_id):
     Session = sessionmaker(bind=engine)
