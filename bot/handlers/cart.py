@@ -30,7 +30,7 @@ def cart(update: Update, context: CallbackContext):
     products = get_cart_via_tg_id(user_id)
     if not products: 
         update.message.reply_text(jtext["cart_is_empty"][lang(user_id)])
-        return ConversationHandler.END
+        return states.CATEGORY
     else:
         text = jtext["cart_text"][lang(user_id)].format(
             list=''.join([
@@ -59,7 +59,7 @@ def minus_product(update: Update, context: CallbackContext):
     products = get_cart_via_tg_id(user_id)
     if not products: 
         query.edit_message_text(jtext["cart_is_empty"][lang(user_id)])
-        return ConversationHandler.END
+        return states.CATEGORY
     else:
         text = jtext["cart_text"][lang(user_id)].format(
             list=''.join([
@@ -86,7 +86,7 @@ def plus_product(update: Update, context: CallbackContext):
     products = get_cart_via_tg_id(user_id)
     if not products: 
         query.edit_message_text(jtext["cart_is_empty"][lang(user_id)])
-        return ConversationHandler.END
+        return states.CATEGORY
     else:
         text = jtext["cart_text"][lang(user_id)].format(
             list=''.join([
@@ -112,7 +112,7 @@ def delete_product(update: Update, context: CallbackContext):
     products = get_cart_via_tg_id(user_id)
     if not products: 
         query.edit_message_text(jtext["cart_is_empty"][lang(user_id)])
-        return ConversationHandler.END
+        return states.CATEGORY
     else:
         text = jtext["cart_text"][lang(user_id)].format(
             list=''.join([
