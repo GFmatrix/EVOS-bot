@@ -34,9 +34,6 @@ def get_cart_via_tg_id(telegram_id):
     session = Session()
     user_id = session.query(UsersTable).filter_by(telegram_id=telegram_id).first().id
     products = session.query(CartTable).filter_by(user_id=user_id).all()
-    print(products)
-    
-    print(products)
     for product in products:
         pr = get_product_by_id(product.product_id)
         product.price = pr.price

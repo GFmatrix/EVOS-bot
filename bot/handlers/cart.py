@@ -54,28 +54,79 @@ def minus_product(update: Update, context: CallbackContext):
     if update_product_count(product_id) <= 1:
         delete_product(update, context)
     product = update_product_count(product_id, count=update_product_count(product_id)-1)
-    update.message.from_user.id = query.from_user.id
-    cart(update, context)
-    return states.CART
+    
+    user_id = query.from_user.id
+    products = get_cart_via_tg_id(user_id)
+    if not products: 
+        query.edit_message_text(jtext["cart_is_empty"][lang(user_id)])
+        return ConversationHandler.END
+    else:
+        text = jtext["cart_text"][lang(user_id)].format(
+            list=''.join([
+                jtext["list_text"][lang(user_id)].format(
+                        name=product.name, count=product.count, 
+                        price='{:,}'.format(product.price), 
+                        total_price='{:,}'.format(int(product.count)*int(product.price))
+                    ) for product in products]),
+            total_price='{:,}'.format(sum([int(product.count)*int(product.price) for product in products]))
+            )
+        query.edit_message_text(text, parse_mode=ParseMode.HTML,
+        reply_markup=cart_keyboard.cart_keyboard(products)
+        )
+        return states.CART
 
 def plus_product(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
     product_id = query.data.split('-')[1]
     
-    product = update_product_count(product_id, count=update_product_count()+1)
-    update.message.from_user.id = query.from_user.id
-    cart(update, context)
-    return states.CART
+    product = update_product_count(product_id, count=update_product_count(product_id)+1)
+    
+    user_id = update.message.from_user.id
+    products = get_cart_via_tg_id(user_id)
+    if not products: 
+        query.edit_message_text(jtext["cart_is_empty"][lang(user_id)])
+        return ConversationHandler.END
+    else:
+        text = jtext["cart_text"][lang(user_id)].format(
+            list=''.join([
+                jtext["list_text"][lang(user_id)].format(
+                        name=product.name, count=product.count, 
+                        price='{:,}'.format(product.price), 
+                        total_price='{:,}'.format(int(product.count)*int(product.price))
+                    ) for product in products]),
+            total_price='{:,}'.format(sum([int(product.count)*int(product.price) for product in products]))
+            )
+        query.edit_message_text(text, parse_mode=ParseMode.HTML,
+        reply_markup=cart_keyboard.cart_keyboard(products)
+        )
+        return states.CART
 
 def delete_product(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
     product_id = query.data.split('-')[1]
     remove_from_cart(product_id)
-    update.message.from_user.id = query.from_user.id
-    cart(update, context)
-    return states.CART
+    
+    user_id = query.from_user.id
+    products = get_cart_via_tg_id(user_id)
+    if not products: 
+        query.edit_message_text(jtext["cart_is_empty"][lang(user_id)])
+        return ConversationHandler.END
+    else:
+        text = jtext["cart_text"][lang(user_id)].format(
+            list=''.join([
+                jtext["list_text"][lang(user_id)].format(
+                        name=product.name, count=product.count, 
+                        price='{:,}'.format(product.price), 
+                        total_price='{:,}'.format(int(product.count)*int(product.price))
+                    ) for product in products]),
+            total_price='{:,}'.format(sum([int(product.count)*int(product.price) for product in products]))
+            )
+        query.edit_message_text(text, parse_mode=ParseMode.HTML,
+        reply_markup=cart_keyboard.cart_keyboard(products)
+        )
+        return states.CART
 
 def back_to_products(update: Update, context: CallbackContext):
     products_button = order_keyboard.products_keyboard(context.user_data['category'])
